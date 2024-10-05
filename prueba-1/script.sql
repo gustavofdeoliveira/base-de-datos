@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS producto_empresa_transporte
     FOREIGN KEY (id_producto) REFERENCES producto(id)
 );
 
-
+-- 4. A)
 -- Cliente A
 INSERT INTO cliente (rut, nombre, fecha_nascimento, direccion, telefono) 
 VALUES (1, 'Cliente A', '1985-04-12', 'Rua Exemplo 123, Cidade A', '555-1234');
@@ -112,6 +112,7 @@ VALUES (2, 'Cliente B', '1990-08-25', 'Avenida Teste 456, Cidade B', '555-5678')
 INSERT INTO cliente (rut, nombre, fecha_nascimento, direccion, telefono) 
 VALUES (3, 'Cliente C', '2000-11-03', 'Travessa Demo 789, Cidade C', '555-9101');
 
+-- 4. B)
 -- Empregado A
 INSERT INTO empleado (rut, posicion, email, nombre, telefono) 
 VALUES (101, 'Gerente', 'empregadoA@email.com', 'Empregado A', '555-1111');
@@ -123,6 +124,8 @@ VALUES (102, 'Analista', 'empregadoB@email.com', 'Empregado B', '555-2222');
 -- Empregado C
 INSERT INTO empleado (rut, posicion, email, nombre, telefono) 
 VALUES (103, 'Desenvolvedor', 'empregadoC@email.com', 'Empregado C', '555-3333');
+
+-- 4. C)
 
 -- Empresa de Transporte T1
 INSERT INTO empresa_transporte (rut, nombre) 
@@ -160,6 +163,7 @@ VALUES (200, 2, 2);
 INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
 VALUES (50, 3, 3);
 
+-- 4. D)
 -- Presupuesto C1
 INSERT INTO presupuesto (descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
 VALUES ('Imprimir 100 trípticos UCN', 360000, '2024-03-01', 'Analizando', 1, 101);
