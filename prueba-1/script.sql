@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS cliente
 
 CREATE TABLE IF NOT EXISTS empleado 
 ( 
-    rut INT PRIMARY KEY,  
-    posicion VARCHAR(50) NOT NULL,  
+    rut INT PRIMARY KEY,   
     email VARCHAR(150) NOT NULL,  
     nombre VARCHAR(255) NOT NULL,  
     telefono VARCHAR(50) NOT NULL  
@@ -57,7 +56,7 @@ CREATE TABLE IF NOT EXISTS orden
     fecha_aceptacion DATE NOT NULL,  
     status VARCHAR(50) NOT NULL,  
     fecha_finalizacion DATE,
-    id_producto INT,  -- Adicionado
+    id_producto INT,
     FOREIGN KEY (id_producto) REFERENCES producto(id)
 );
 
@@ -99,6 +98,7 @@ CREATE TABLE IF NOT EXISTS producto_empresa_transporte
     FOREIGN KEY (id_producto) REFERENCES producto(id)
 );
 
+
 -- 4. A)
 -- Cliente A
 INSERT INTO cliente (rut, nombre, fecha_nascimento, direccion, telefono) 
@@ -112,21 +112,22 @@ VALUES (2, 'Cliente B', '1990-08-25', 'Avenida Teste 456, Cidade B', '555-5678')
 INSERT INTO cliente (rut, nombre, fecha_nascimento, direccion, telefono) 
 VALUES (3, 'Cliente C', '2000-11-03', 'Travessa Demo 789, Cidade C', '555-9101');
 
+
 -- 4. B)
--- Empregado A
-INSERT INTO empleado (rut, posicion, email, nombre, telefono) 
-VALUES (101, 'Gerente', 'empregadoA@email.com', 'Empregado A', '555-1111');
+-- Empleado A
+INSERT INTO empleado (rut, email, nombre, telefono) 
+VALUES (101, 'empleado@email.com', 'Empleado A', '555-1111');
 
--- Empregado B
-INSERT INTO empleado (rut, posicion, email, nombre, telefono) 
-VALUES (102, 'Analista', 'empregadoB@email.com', 'Empregado B', '555-2222');
+-- Empleado B
+INSERT INTO empleado (rut, email, nombre, telefono) 
+VALUES (102, 'empleado@email.com', 'Empleado B', '555-2222');
 
--- Empregado C
-INSERT INTO empleado (rut, posicion, email, nombre, telefono) 
-VALUES (103, 'Desenvolvedor', 'empregadoC@email.com', 'Empregado C', '555-3333');
+-- Empleado C
+INSERT INTO empleado (rut, email, nombre, telefono) 
+VALUES (103, 'empleado@email.com', 'Empleado C', '555-3333');
+
 
 -- 4. C)
-
 -- Empresa de Transporte T1
 INSERT INTO empresa_transporte (rut, nombre) 
 VALUES (201, 'Transporte T1');
@@ -139,60 +140,80 @@ VALUES (202, 'Transporte T2');
 INSERT INTO empresa_transporte (rut, nombre) 
 VALUES (203, 'Transporte T3');
 
+
+-- 4. D)
 -- Material M1
-INSERT INTO material (cantidad, nombre) 
-VALUES (500, 'Papel A4');
+INSERT INTO material (id, cantidad, nombre) 
+VALUES (1, 500, 'Papel A4');
 
 -- Material M2
-INSERT INTO material (cantidad, nombre) 
-VALUES (200, 'Tinta para Impressora');
+INSERT INTO material (id, cantidad, nombre) 
+VALUES (2, 200, 'Tinta para Impressora');
 
 -- Material M3
-INSERT INTO material (cantidad, nombre) 
-VALUES (100, 'Cartolina');
+INSERT INTO material (id, cantidad, nombre) 
+VALUES (3, 300, 'Cartolina');
 
--- Presupuesto Material
+-- Presupuesto C1
+INSERT INTO presupuesto (id, descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
+VALUES (1, 'Imprimir 100 trípticos UCN', 360000, '2024-03-01', 'Analizando', 1, 101);
+
+-- Presupuesto C2
+INSERT INTO presupuesto (id, descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
+VALUES (2, 'Imprimir 70 ejemplares del libro guía de Programación', 700000, '2024-01-01', 'Analizando', 2, 102);
+
+-- Presupuesto C3
+INSERT INTO presupuesto (id, descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
+VALUES (3, 'Construir 2 pendones de la Escuela de Ingeniería', 220000, '2024-04-01', 'Analizando', 2, 103);
+
+-- Presupuesto 1 Material
 INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
-VALUES (300, 1, 1);
+VALUES (95, 1, 1);
 
--- Presupuesto Material
+UPDATE material SET cantidad = cantidad - 95 WHERE id = 1;
+
 INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
-VALUES (200, 2, 2);
+VALUES (28, 2, 1);
 
--- Presupuesto Material
+UPDATE material SET cantidad = cantidad - 28 WHERE id = 2;
+
+-- Presupuesto 2 Material
+INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
+VALUES (74, 2, 2);
+INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
+VALUES (95, 3, 2);
+
+UPDATE material SET cantidad = cantidad - 74 WHERE id = 2;
+
+UPDATE material SET cantidad = cantidad - 95 WHERE id = 3;
+
+-- Presupuesto 3 Material
+INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
+VALUES (133, 2, 3);
+
+UPDATE material SET cantidad = cantidad - 133 WHERE id = 2;
+
 INSERT INTO presupuesto_material (cantidad_necesaria, id_material, id_presupuesto) 
 VALUES (50, 3, 3);
 
--- 4. D)
--- Presupuesto C1
-INSERT INTO presupuesto (descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
-VALUES ('Imprimir 100 trípticos UCN', 360000, '2024-03-01', 'Analizando', 1, 101);
+UPDATE material SET cantidad = cantidad - 50 WHERE id = 3;
 
--- Presupuesto C2
-INSERT INTO presupuesto (descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
-VALUES ('Imprimir 70 ejemplares del libro guía de Programación', 700000, '2024-01-01', 'Analizando', 2, 102);
-
--- Presupuesto C3
-INSERT INTO presupuesto (descripcion_producto, valoracion, fecha, status, id_cliente, id_empleados) 
-VALUES ('Construir 2 pendones de la Escuela de Ingeniería', 220000, '2024-04-01', 'Analizando', 2, 103);
 
 -- 4. E)
-
 UPDATE presupuesto 
 SET status = 'Aceptada', fecha = '2024-01-15' 
 WHERE id = 2;
 
-INSERT INTO producto (descripcion, estado_pago, id_presupuesto) 
-VALUES ('Produto C2', 'No pagado', 2);
+INSERT INTO producto (id, descripcion, estado_pago, id_presupuesto) 
+VALUES (1, 'Produto C2', 'No pagado', 2);
 
+INSERT INTO orden (id, fecha_aceptacion, status, fecha_finalizacion, id_producto) 
+VALUES (1, '2024-01-15', 'Aceptada', NULL, 1);
 
-INSERT INTO orden (fecha_aceptacion, status, fecha_finalizacion, id_producto) 
-VALUES ('2024-01-15', 'Aceptada', NULL, 2);
-
-INSERT INTO empleado_orden (rut_empleado, order_id)
+INSERT INTO empleado_orden (id, rut_empleado, order_id)
 VALUES 
-(102, 1),
-(103, 1);
+(1, 102, 1),
+(2, 103, 1);
 
 
 --4. F)
@@ -200,18 +221,18 @@ UPDATE presupuesto
 SET status = 'Aceptada', fecha = '2024-04-28' 
 WHERE id = 3;
 
-INSERT INTO producto (descripcion, estado_pago, id_presupuesto) 
-VALUES ('Produto C3', 'No pagado', 3);
+INSERT INTO producto (id, descripcion, estado_pago, id_presupuesto) 
+VALUES (2, 'Produto C3', 'No pagado', 3);
 
-INSERT INTO orden (fecha_aceptacion, status, fecha_finalizacion, id_producto) 
-VALUES ('2024-04-28', 'Aceptada', NULL, 3);
+INSERT INTO orden (id, fecha_aceptacion, status, fecha_finalizacion, id_producto) 
+VALUES (2, '2024-04-28', 'Aceptada', NULL, 2);
 
-INSERT INTO empleado_orden (rut_empleado, order_id)
+INSERT INTO empleado_orden (id, rut_empleado, order_id)
 VALUES 
-(102, 2);
+(3, 102, 2);
+
 
 -- 4. G)
-
 UPDATE orden SET status = 'Terminada', fecha_finalizacion = '2024-05-01' WHERE id = 2;
 
 INSERT INTO factura (id, metodo_pago, valor, fecha, id_orden) values (1, 'Efectivo', 100000, '2024-04-20', 2);
@@ -234,8 +255,8 @@ INSERT INTO producto_empresa_transporte (rut_empresa, id_producto) values (203, 
 
 INSERT INTO producto_empresa_transporte (rut_empresa, id_producto) values (202, 2);
 
--- 5. A)
 
+-- 5. A)
 SELECT c.rut, c.nombre, p.descripcion_producto, p.valoracion, p.fecha, p.status
 FROM cliente c
 LEFT JOIN presupuesto p ON c.rut = p.id_cliente;
@@ -259,8 +280,15 @@ SELECT m.nombre, COUNT(pm.id_presupuesto) AS quantidade_utilizada
 FROM material m
 JOIN presupuesto_material pm ON m.id = pm.id_material
 GROUP BY m.nombre
-ORDER BY quantidade_utilizada DESC
-LIMIT 1;
+HAVING COUNT(pm.id_presupuesto) = (
+    SELECT MAX(quantidade_utilizada)
+    FROM (
+        SELECT COUNT(pm2.id_presupuesto) AS quantidade_utilizada
+        FROM material m2
+        JOIN presupuesto_material pm2 ON m2.id = pm2.id_material
+        GROUP BY m2.nombre
+    ) AS subquery
+);
 
 -- 5. E)
 
