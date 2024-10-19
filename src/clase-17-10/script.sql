@@ -19,3 +19,12 @@ where exists (
     select 1 from f2006_goles g
     where g.id_jugador = j.id_jugador and g.id_seleccion = j.id_seleccion
 )
+
+
+select j.nombre, j.id_jugador, j.id_seleccion
+from f2006_jugadores j
+where j.id_seleccion = 'ARG' and j.id_jugador = 1
+union
+select j.nombre, j.id_jugador, j.id_seleccion
+from f2006_jugadores j
+where j.id_seleccion = 'CRC' and j.id_jugador = 1
