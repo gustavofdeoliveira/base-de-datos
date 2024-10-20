@@ -197,40 +197,39 @@ GROUP BY c.nombre;
 
 -- 9. Encontrar tratamientos aplicados por un veterinario específico durante un rango de fechas.
 
-
 SELECT t.nombre AS tratamiento, t.fecha_inicio, t.fecha_fin, v.fecha AS fecha_visita, m.nombre AS mascota
 FROM tratamiento t
 JOIN visita v ON t.id_visita = v.id
 JOIN veterinario vet ON v.id_veterinario = vet.rut
 JOIN mascota m ON v.id_mascota = m.id
-WHERE vet.rut = 12312312 -- Reemplaza con el RUT del veterinario específico
-AND t.fecha_inicio >= '2024-09-01' AND t.fecha_fin <= '2024-10-01'; -- Reemplaza con el rango de fechas
-10. Identificar las mascotas con más visitas médicas registradas.
+WHERE vet.rut = 65465465
+AND t.fecha_inicio >= '2024-10-10' AND t.fecha_fin <= '2024-10-13'; 
 
+-- 10. Identificar las mascotas con más visitas médicas registradas.
 
 SELECT m.nombre, COUNT(v.id) AS cantidad_visitas
 FROM mascota m
 JOIN visita v ON m.id = v.id_mascota
 GROUP BY m.nombre
 ORDER BY cantidad_visitas DESC;
-11. Encontrar los tratamientos más costosos que se han aplicado a una mascota específica.
 
+-- 11. Encontrar los tratamientos más costosos que se han aplicado a una mascota específica.
 
 SELECT t.nombre, t.precio
 FROM tratamiento t
 JOIN visita v ON t.id_visita = v.id
 JOIN mascota m ON v.id_mascota = m.id
-WHERE m.nombre = 'Firulais' -- Reemplaza con el nombre de la mascota
-ORDER BY t.precio DESC
-LIMIT 5;
-12. Verificar si alguna mascota tiene visitas pendientes con veterinarios específicos.
+WHERE m.id = 6
+ORDER BY t.precio DESC;
 
+-- 12. Verificar si alguna mascota tiene visitas pendientes con veterinarios específicos.
 
 SELECT m.nombre AS mascota, v.fecha AS fecha_visita, vet.nombre AS veterinario
 FROM visita v
 JOIN mascota m ON v.id_mascota = m.id
 JOIN veterinario vet ON v.id_veterinario = vet.rut
 WHERE v.fecha > NOW(); -- Considerando visitas futuras como pendientes
+
 13. Encontrar la visita más reciente realizada a cada mascota que no ha recibido tratamiento alguno.
 
 
