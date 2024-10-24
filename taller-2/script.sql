@@ -108,7 +108,7 @@ INSERT INTO visita (id, fecha, motivo, diagnostico, descripcion, id_mascota, id_
 (7, '2024-09-30', 'Control de salud', 'Peso levemente elevado', 'Recomendación de dieta', 7, 14714714),
 (8, '2024-10-12', 'Emergencia', 'Corte profundo en la pata', 'Sutura y curación realizadas', 8, 25825825),
 (9, '2024-10-16', 'Vacunación', 'Vacuna triple felina aplicada', 'Recomendado monitorear durante 24 horas', 9, 36936936),
-(10, '2024-10-18', 'Control de salud', 'Signos de artritis', 'Recomendado suplemento para articulaciones', 10, 74174174);
+(10, '2024-12-18', 'Control de salud', 'Signos de artritis', 'Recomendado suplemento para articulaciones', 10, 74174174);
 
 -- Insertando registros en la tabla tratamiento
 INSERT INTO tratamiento (id, nombre, fecha_fin, fecha_inicio, precio, id_visita) VALUES 
@@ -228,10 +228,9 @@ SELECT m.nombre AS mascota, v.fecha AS fecha_visita, vet.nombre AS veterinario
 FROM visita v
 JOIN mascota m ON v.id_mascota = m.id
 JOIN veterinario vet ON v.id_veterinario = vet.rut
-WHERE v.fecha > NOW(); -- Considerando visitas futuras como pendientes
+WHERE v.fecha > NOW();
 
-13. Encontrar la visita más reciente realizada a cada mascota que no ha recibido tratamiento alguno.
-
+-- 13. Encontrar la visita más reciente realizada a cada mascota que no ha recibido tratamiento alguno.
 
 SELECT m.nombre AS mascota, MAX(v.fecha) AS fecha_ultima_visita
 FROM mascota m
@@ -239,8 +238,8 @@ JOIN visita v ON m.id = v.id_mascota
 LEFT JOIN tratamiento t ON v.id = t.id_visita
 WHERE t.id IS NULL
 GROUP BY m.nombre;
-14. Encontrar los veterinarios que han atendido el mayor número de visitas y calcular el costo promedio de los tratamientos aplicados por cada uno.
 
+-- 14. Encontrar los veterinarios que han atendido el mayor número de visitas y calcular el costo promedio de los tratamientos aplicados por cada uno.
 
 SELECT vet.nombre AS veterinario, COUNT(v.id) AS cantidad_visitas, AVG(t.precio) AS costo_promedio_tratamiento
 FROM veterinario vet
@@ -248,8 +247,8 @@ JOIN visita v ON vet.rut = v.id_veterinario
 LEFT JOIN tratamiento t ON v.id = t.id_visita
 GROUP BY vet.nombre
 ORDER BY cantidad_visitas DESC;
-15. Encontrar las combinaciones de mascotas y dueños que han gastado más en tratamientos, mostrando el total gastado.
 
+--15. Encontrar las combinaciones de mascotas y dueños que han gastado más en tratamientos, mostrando el total gastado.
 
 SELECT c.nombre AS dueño, m.nombre AS mascota, SUM(t.precio) AS total_gastado
 FROM cliente c
