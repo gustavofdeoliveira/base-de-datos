@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS cliente (
     direccion VARCHAR(255) NOT NULL,  
     email VARCHAR(100) NOT NULL,  
     telefone VARCHAR(50) NOT NULL,  
-    contrasena VARCHAR(150) NOT NULL
+    contrasena VARCHAR(150) NOT NULL,
+    tipo VARCHAR(50) NOT NULL DEFAULT 'cliente'
 );
 
 -- Tabla Cuenta
@@ -51,11 +52,11 @@ INSERT INTO operacion_status (nombre) VALUES ('creado'), ('comenzo'), ('finaliza
 
 -- Insertando datos en la tabla Cliente
 INSERT INTO cliente (rut, nombre, direccion, email, telefone, contrasena) VALUES
-(101234567, 'Carlos Soto', 'Av. Las Flores 123', 'carlos.soto@gmail.com', '+56912345678', 'password123'),
-(102345678, 'Ana Pérez', 'Calle Los Robles 456', 'ana.perez@hotmail.com', '+56987654321', 'securepass456'),
-(103456789, 'Javier Morales', 'Pasaje Los Álamos 789', 'javier.morales@yahoo.com', '+56911223344', 'mypassword789'),
-(104567890, 'Laura Díaz', 'Av. Principal 1011', 'laura.diaz@outlook.com', '+56933445566', 'laura1234'),
-(105678901, 'Roberto Gómez', 'Calle Central 1415', 'roberto.gomez@gmail.com', '+56955667788', 'robgomez567');
+(101234567, 'Carlos Soto', 'Av. Las Flores 123', 'carlos.soto@gmail.com', '+56912345678', 'password123', 'cliente'),
+(102345678, 'Ana Pérez', 'Calle Los Robles 456', 'ana.perez@hotmail.com', '+56987654321', 'securepass456', 'cliente'),
+(103456789, 'Javier Morales', 'Pasaje Los Álamos 789', 'javier.morales@yahoo.com', '+56911223344', 'mypassword789', 'administrador'),
+(104567890, 'Laura Díaz', 'Av. Principal 1011', 'laura.diaz@outlook.com', '+56933445566', 'laura1234', 'administrador'),
+(105678901, 'Roberto Gómez', 'Calle Central 1415', 'roberto.gomez@gmail.com', '+56955667788', 'robgomez567', 'cliente');
 
 -- Insertando datos en la tabla Cuenta
 INSERT INTO cuenta (numero, saldo, fecha_creacion, id_cliente) VALUES
