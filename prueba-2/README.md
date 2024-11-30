@@ -2,7 +2,7 @@
 
 ## Alumno
 - Nombre: Gustavo Ferreira de Oliveira
-RUT: 400162816
+- RUT: 400162816
 
 ## Enunciado
 
