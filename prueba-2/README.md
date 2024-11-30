@@ -66,26 +66,23 @@ El control del inventario es una prioridad para la tienda, siendo necesario regi
 
 ### **Trabajo a realizar**
 
-1. **Modelado conceptual (DER):** Diseñe el Diagrama Entidad-Relación que represente la problemática descrita, incluyendo todas las entidades mencionadas en los requisitos. [10%]  
+1. **Modelado conceptual (DER):** Diseñe el Diagrama Entidad-Relación que represente la problemática descrita, incluyendo todas las entidades mencionadas en los requisitos.
    
-2. **Modelo relacional:** Transforme el DER en un Modelo Relacional, asegurándose de que las tablas estén normalizadas a BCNF, y considere las relaciones entre gerentes, empleados y demás entidades. [6%]  
+2. **Modelo relacional:** Transforme el DER en un Modelo Relacional, asegurándose de que las tablas estén normalizadas a BCNF, y considere las relaciones entre gerentes, empleados y demás entidades. 
 
-3. **Creación de tablas:** Genere el SQL para crear las tablas correspondientes al Modelo Relacional, incluyendo restricciones de integridad como claves primarias, claves foráneas y atributos únicos. [6%]  
+3. **Creación de tablas:** Genere el SQL para crear las tablas correspondientes al Modelo Relacional, incluyendo restricciones de integridad como claves primarias, claves foráneas y atributos únicos. 
 
-4. **Inserción de datos:** Escriba los SQL para realizar las siguientes inserciones: [39%]  
+4. **Inserción de datos:** Escriba los SQL para realizar las siguientes inserciones:
    - Ingrese 3 clientes.  
    - Ingrese 5 productos distribuidos en al menos 2 categorías.  
    - Ingrese 3 proveedores y asocie cada uno con al menos un producto.  
    - Ingrese 3 empleados.  
    - Ingrese 1 gerente y asocie al menos 2 empleados a su supervisión.  
-   - Registre 2 ventas con los siguientes detalles:  
-     - Venta 1: Cliente A compra 2 productos el 2024-03-01 por $100.000, gestionada por el Empleado 1.  
-     - Venta 2: Cliente B compra 1 producto el 2024-03-15 por $50.000, gestionada por el Empleado 2.  
-   - Registre 1 devolución: Cliente A devuelve un producto de la Venta 1 el 2024-03-20.  
+   - Registre 2 ventas.
    - Ingrese 2 ofertas activas para algunos productos.  
    - Realice un ajuste de inventario para 2 productos el 2024-04-01.  
 
-5. **Consultas:** Escriba las consultas SQL para responder lo siguiente: [39%]  
+5. **Consultas:** Escriba las consultas SQL para responder lo siguiente: 
    a. Liste todos los clientes y sus compras, incluyendo a aquellos sin compras.  
    b. Liste los productos, indicando su stock actual, y si están en oferta, muestre el precio con descuento.  
    c. Identifique a los empleados que no han gestionado ninguna venta.  
