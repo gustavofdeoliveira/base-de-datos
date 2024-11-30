@@ -101,3 +101,20 @@ El control del inventario es una prioridad para la tienda, siendo necesario regi
       - Otra que retorne los ingresos generados por un cliente específico.  
       - Otra que registre automáticamente una venta a partir de un cliente, empleado y productos seleccionados, actualizando el stock de forma dinámica.  
 
+
+## Modelado Conceptual (DER)
+
+![1732994640083](image/README/1732994640083.png)
+
+Acceso al archivo [click here](https://app.brmodeloweb.com/#!/publicview/674b3843d945ddf265e8f5a2)
+
+## Modelo Relacional
+
+![1732994542151](image/README/1732994542151.png)
+
+Acceso al archivo [click here](https://app.brmodeloweb.com/#!/publicview/674b669bd945ddf265e8fac2)
+
+
+## Creación de Tablas
+
+Los scripts de creación de tablas se encuentran en el archivo `src/script.sql`.
