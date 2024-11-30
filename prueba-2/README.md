@@ -1,6 +1,10 @@
-**Enunciado**  
+# Prueba 2
 
-### Texto Atualizado com a Entidade Gerente
+## Alumno
+- Nombre: Gustavo Ferreira de Oliveira
+RUT: 400162816
+
+## Enunciado
 
 Una tienda de ventas de productos desea mejorar su sistema de gestión y control, actualmente realizado de forma manual, hacia un sistema electrónico que permita una mayor eficiencia en la administración de clientes, productos y ventas. La tienda trabaja con una amplia variedad de productos, organizados por categorías, cada una representando un grupo de artículos similares, como electrónicos, ropa o alimentos. Cada producto tiene un precio, una cantidad en inventario y está asociado a una categoría específica, lo que facilita una mejor organización del stock.
 
