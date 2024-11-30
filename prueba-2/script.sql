@@ -129,8 +129,6 @@ BEGIN
 END;
 $$;
 
-
--- Registrar automaticamente uma venda
 -- Registrar automaticamente uma venda
 CREATE OR REPLACE FUNCTION registrar_venta(cliente INT, empleado INT, producto INT, cantidad INT)
 RETURNS VOID
@@ -161,7 +159,6 @@ RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    -- Atualiza o estoque após uma venda
     UPDATE producto 
     SET cantidad_inventario = cantidad_inventario - NEW.cantidad 
     WHERE id = NEW.id_producto;
@@ -180,7 +177,6 @@ RETURNS TRIGGER
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    -- Verifica si la cantidad solicitada para la venta está disponible en el stock
     IF (SELECT cantidad_inventario FROM producto WHERE id = NEW.id_producto) < NEW.cantidad THEN
         RAISE EXCEPTION 'Stock insuficiente para el producto: %', NEW.id_producto;
     END IF;
@@ -197,7 +193,7 @@ EXECUTE FUNCTION verificar_stock_func();
 
 -- Inserción de datos
 
--- Inserir 10 clientes
+-- Inserción de 10 clientes
 INSERT INTO cliente (rut, nombre, correo, telefono) VALUES
 (100000001, 'Ana Rodríguez', 'ana.rodriguez@gmail.com', '987654321'),
 (100000002, 'Luis González', 'luis.gonzalez@gmail.com', '912345678'),
@@ -210,7 +206,7 @@ INSERT INTO cliente (rut, nombre, correo, telefono) VALUES
 (100000009, 'Sofía Ruiz', 'sofia.ruiz@gmail.com', '944556677'),
 (100000010, 'David Rodríguez', 'david.rodriguez@gmail.com', '988776655');
 
--- Inserir 10 gerentes
+-- Inserción de 10 gerentes
 INSERT INTO gerente (rut, nombre, correo, telefono) VALUES
 (111111111, 'Ricardo Gómez', 'ricardo.gomez@gmail.com', '123456789'),
 (111111112, 'Ana Martínez', 'ana.martinez@gmail.com', '234567890'),
@@ -223,7 +219,7 @@ INSERT INTO gerente (rut, nombre, correo, telefono) VALUES
 (111111119, 'Fernando López', 'fernando.lopez@gmail.com', '901234567'),
 (111111120, 'Isabel Sánchez', 'isabel.sanchez@gmail.com', '102345678');
 
--- Inserir 10 empregados
+-- Inserción de 10 empleados
 INSERT INTO empleado (rut, nombre, correo, telefono, id_gerente) VALUES
 (111223344, 'Juan Pérez', 'juan.perez@gmail.com', '222222222', 111111111),
 (111223345, 'María López', 'maria.lopez@gmail.com', '333333333', 111111111),
@@ -236,7 +232,7 @@ INSERT INTO empleado (rut, nombre, correo, telefono, id_gerente) VALUES
 (111223352, 'Elena Fernández', 'elena.fernandez@gmail.com', '101010101', 111111111),
 (111223353, 'Marta García', 'marta.garcia@gmail.com', '111111112', 111111111);
 
--- Inserir 10 categorias
+-- Inserción de 10 categorias
 INSERT INTO categoria (nombre) VALUES
 ('Electrónica'),
 ('Ropa'),
@@ -249,7 +245,7 @@ INSERT INTO categoria (nombre) VALUES
 ('Deportes'),
 ('Hogar');
 
--- Inserir 10 fornecedores
+-- Inserción de 10 provedores
 INSERT INTO provedor (rut, nombre, telefono, correo) VALUES
 (123123123, 'Proveedor 1', '987654321', 'proveedor1@gmail.com'),
 (123123124, 'Proveedor 2', '321654987', 'proveedor2@gmail.com'),
@@ -262,7 +258,7 @@ INSERT INTO provedor (rut, nombre, telefono, correo) VALUES
 (123123131, 'Proveedor 9', '543216789', 'proveedor9@gmail.com'),
 (123123132, 'Proveedor 10', '654321123', 'proveedor10@gmail.com');
 
--- Inserir 10 promoções
+-- Inserción de 10 promociones
 INSERT INTO promocion (id, porcentaje_descuento, fecha_inicio, fecha_fin) VALUES
 (1, 10, '2024-01-01', '2024-01-31'),
 (2, 15, '2024-02-01', '2024-02-28'),
@@ -275,7 +271,7 @@ INSERT INTO promocion (id, porcentaje_descuento, fecha_inicio, fecha_fin) VALUES
 (9, 50, '2024-09-01', '2024-09-30'),
 (10, 10, '2024-10-01', '2024-10-31');
 
--- Inserir 10 produtos
+-- Inserción de 10 productos
 INSERT INTO producto (id, nombre, precio, categoria, cantidad_inventario, id_provedor, id_promocion) VALUES
 (1, 'Laptop HP', 900000, 'Electrónica', 15, 123123123, 1),
 (2, 'Smartphone Xiaomi', 350000, 'Electrónica', 10, 123123124, 2),
@@ -288,7 +284,7 @@ INSERT INTO producto (id, nombre, precio, categoria, cantidad_inventario, id_pro
 (9, 'Auriculares Sony', 120000, 'Electrónica', 5, 123123131, 2),
 (10, 'Cámara Canon', 1200000, 'Electrónica', 4, 123123132, NULL);
 
--- Inserir 10 detalhes de venda
+-- Inserción de 10 detalles de venta
 INSERT INTO detalle_venda (id, id_producto, cantidad, precio_unitario) VALUES
 (1, 1, 1, 900000),
 (2, 2, 1, 350000),
@@ -302,7 +298,7 @@ INSERT INTO detalle_venda (id, id_producto, cantidad, precio_unitario) VALUES
 (10, 10, 1, 1200000);
 
 
--- Inserir 10 vendas
+-- Inserción de 10 vendas
 INSERT INTO venda (id, fecha, valor_total, metodo_pago, id_cliente, id_empleado, id_detalle_venda) VALUES
 (1, '2024-01-10', 100000, 'Crédito', 100000001, 111223344, 1),
 (2, '2024-01-11', 350000, 'Débito', 100000002, 111223345, 2),
@@ -316,7 +312,7 @@ INSERT INTO venda (id, fecha, valor_total, metodo_pago, id_cliente, id_empleado,
 (10, '2024-01-19', 1200000, 'Débito', 100000010, 111223353, 10);
 
 
--- Inserir 10 devoluções
+-- Inserción de 10 devoluciones
 INSERT INTO devolucion (id, fecha, motivo, id_cliente) VALUES
 (1, '2024-02-01', 'Produto danificado', 100000001),
 (2, '2024-02-02', 'Produto não funciona', 100000002),
@@ -332,38 +328,38 @@ INSERT INTO devolucion (id, fecha, motivo, id_cliente) VALUES
 
 -- Consultas
 
--- a. Liste todos os clientes e suas compras, incluindo aqueles sem compras
+-- a. Liste todos los clientes y sus compras, incluyendo aquellos sin compras
 SELECT c.rut, c.nombre, v.id AS id_venda, v.valor_total
 FROM cliente c
 LEFT JOIN venda v ON c.rut = v.id_cliente;
 
--- b. Liste os produtos com estoque atual, e se estiverem em promoção, mostre o preço com desconto
+-- b. Liste los productos con stock actual, y si están en promoción, muestre el precio con descuento
 SELECT p.nombre, p.precio, 
        CASE WHEN pr.id IS NOT NULL THEN p.precio - (p.precio * pr.porcentaje_descuento / 100) ELSE p.precio END AS precio_con_descuento
 FROM producto p
 LEFT JOIN promocion pr ON p.id_promocion = pr.id;
 
--- c. Identifique os empregados que não gerenciaram nenhuma venda
+-- c. Identifique a los empleados que no han gestionado ninguna venta
 SELECT e.nombre
 FROM empleado e
 LEFT JOIN venda v ON e.rut = v.id_empleado
 WHERE v.id IS NULL;
 
--- d. Liste os produtos devolvidos, indicando a razão
+-- d. Liste los productos devueltos, indicando la razón
 SELECT d.motivo, p.nombre AS producto
 FROM devolucion d
 JOIN venda v ON d.id_cliente = v.id_cliente
 JOIN detalle_venda dv ON v.id_detalle_venda = dv.id
 JOIN producto p ON dv.id_producto = p.id;
 
--- e. Produto mais e menos vendido
+-- e. Producto más y menos vendido
 SELECT p.nombre, SUM(dv.cantidad) AS total_vendido
 FROM producto p
 JOIN detalle_venda dv ON p.id = dv.id
 GROUP BY p.id
 ORDER BY total_vendido DESC;
 
--- f. Receita total por categoria
+-- f. Ingresos totales por categoría
 SELECT c.nombre AS categoria, SUM(v.valor_total) AS receita_total
 FROM categoria c
 JOIN producto p ON c.nombre = p.categoria
@@ -371,14 +367,36 @@ JOIN detalle_venda dv ON p.id = dv.id_producto
 JOIN venda v ON v.id_detalle_venda = dv.id
 GROUP BY c.nombre;
 
--- g. Provedor que forneceu mais produtos
+-- g. Proveedor que suministró más productos
 SELECT pv.nombre, COUNT(p.id) AS produtos_fornecidos
 FROM provedor pv
 JOIN producto p ON pv.rut = p.id_provedor
 GROUP BY pv.rut
 ORDER BY produtos_fornecidos DESC;
 
--- h. Liste os gerentes e empregados sob sua supervisão
+-- h. Liste los gerentes y empleados bajo su supervisión
 SELECT g.nombre AS gerente, e.nombre AS empleado
 FROM gerente g
 LEFT JOIN empleado e ON g.rut = e.id_gerente;
+
+-- Probando Triggers
+
+-- Actualizar el stock de un producto después de una venta
+
+-- Consultar el stock de la Laptop HP antes de la venta
+SELECT id, nombre, cantidad_inventario 
+FROM producto 
+WHERE id = 1;
+
+-- Registrar una venta
+INSERT INTO detalle_venda (id, id_producto, cantidad, precio_unitario) 
+VALUES (11, 1, 5, 900000); -- 5 unidades de la Laptop HP
+
+-- Consultar el stock de la Laptop HP después de la venta
+SELECT id, nombre, cantidad_inventario 
+FROM producto 
+WHERE id = 1;
+
+-- Verificar el stock antes de registrar la venta
+INSERT INTO detalle_venda (id, id_producto, cantidad, precio_unitario) 
+VALUES (12, 1, 100, 900000); -- Stock insuficiente
