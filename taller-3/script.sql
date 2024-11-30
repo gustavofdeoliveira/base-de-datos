@@ -51,7 +51,7 @@ INSERT INTO tipo_operacion (nombre) VALUES ('depósitos'), ('retiros'), ('transf
 INSERT INTO operacion_status (nombre) VALUES ('creado'), ('comenzo'), ('finalizado') ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente
-INSERT INTO cliente (rut, nombre, direccion, email, telefone, contrasena) VALUES
+INSERT INTO cliente (rut, nombre, direccion, email, telefone, contrasena, tipo) VALUES
 (101234567, 'Carlos Soto', 'Av. Las Flores 123', 'carlos.soto@gmail.com', '+56912345678', 'password123', 'cliente'),
 (102345678, 'Ana Pérez', 'Calle Los Robles 456', 'ana.perez@hotmail.com', '+56987654321', 'securepass456', 'cliente'),
 (103456789, 'Javier Morales', 'Pasaje Los Álamos 789', 'javier.morales@yahoo.com', '+56911223344', 'mypassword789', 'administrador'),

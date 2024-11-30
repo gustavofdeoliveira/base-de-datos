@@ -1,0 +1,60 @@
+# Diretórios e arquivos de build
+/bin/
+/build/
+/out/
+
+# Arquivos gerados pelo Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Arquivos gerados pelo Gradle
+.gradle/
+/build/
+
+# Configurações de dependências e cache local
+.gradle/
+!gradle-wrapper.jar
+
+# Logs
+*.log
+*.pid
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.orig
+
+# Arquivos específicos de IDEs
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+*.metadata/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.build-impl.xml
+
+# VS Code
+.vscode/
+
+# Configuração de sistema operacional
+.DS_Store
+Thumbs.db
+*.~lock.*
+
+data/
