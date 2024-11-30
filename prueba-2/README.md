@@ -95,14 +95,15 @@ El control del inventario es una prioridad para la tienda, siendo necesario regi
 6. **Triggers y funciones:**  
    a. Cree 2 triggers:  
       - Uno que actualice automáticamente el stock de un producto al registrarse una venta o devolución.  
-      - Otro que registre el histórico de ajustes de inventario.  
+      - Uno que verifique que el stock de un producto no sea negativo al registrarse una venta.
+  
    b. Cree 3 funciones:  
       - Una que retorne los productos más vendidos en un rango de fechas.  
       - Otra que retorne los ingresos generados por un cliente específico.  
       - Otra que registre automáticamente una venta a partir de un cliente, empleado y productos seleccionados, actualizando el stock de forma dinámica.  
 
 
-## Modelado Conceptual (DER)
+## Modelo Entidad Relacionamiento
 
 ![Modelado Conceptual](image/README/1732994640083.png)
 
