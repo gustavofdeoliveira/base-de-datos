@@ -104,7 +104,7 @@ El control del inventario es una prioridad para la tienda, siendo necesario regi
 
 ## Modelado Conceptual (DER)
 
-![1732994640083](image/README/1732994640083.png)
+![1732995869468](image/README/1732995869468.png)
 
 Acceso al archivo [click here](https://app.brmodeloweb.com/#!/publicview/674b3843d945ddf265e8f5a2)
 

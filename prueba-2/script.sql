@@ -6,16 +6,6 @@ CREATE TABLE gerente
     telefono VARCHAR(50) NOT NULL  
 );
 
-CREATE TABLE empleado 
-( 
-    rut INT PRIMARY KEY,  
-    nombre VARCHAR(255) NOT NULL,  
-    correo VARCHAR(150) NOT NULL,  
-    telefono VARCHAR(50) NOT NULL,  
-    id_gerente INT NOT NULL,  
-    FOREIGN KEY (id_gerente) REFERENCES gerente(rut)  
-);
-
 CREATE TABLE cliente 
 ( 
     rut INT PRIMARY KEY,  
@@ -45,6 +35,16 @@ CREATE TABLE promocion
     fecha_fin DATE NOT NULL DEFAULT NOW()  
 );
 
+CREATE TABLE empleado 
+( 
+    rut INT PRIMARY KEY,  
+    nombre VARCHAR(255) NOT NULL,  
+    correo VARCHAR(150) NOT NULL,  
+    telefono VARCHAR(50) NOT NULL,  
+    id_gerente INT NOT NULL,  
+    FOREIGN KEY (id_gerente) REFERENCES gerente(rut)  
+);
+
 CREATE TABLE producto 
 ( 
     id INT PRIMARY KEY,  
@@ -55,19 +55,19 @@ CREATE TABLE producto
     categoria VARCHAR(255) NOT NULL,
     cantidad_inventario INT NOT NULL DEFAULT 0,  
     id_provedor INT NOT NULL,  
-    id_promocion INT,   
+    id_promocion INT,  
     FOREIGN KEY (categoria) REFERENCES categoria(nombre),  
     FOREIGN KEY (id_provedor) REFERENCES provedor(rut),  
-    FOREIGN KEY (id_promocion) REFERENCES promocion(id) 
+    FOREIGN KEY (id_promocion) REFERENCES promocion(id)  
 );
 
 CREATE TABLE detalle_venda 
 ( 
     id INT PRIMARY KEY,  
     cantidad INT NOT NULL,  
-    precio_unitario FLOAT NOT NULL , 
-    id_producto INT NOT NULL,
-    FOREIGN KEY (id_producto) REFERENCES producto(id)
+    precio_unitario FLOAT NOT NULL, 
+    id_producto INT NOT NULL,  
+    FOREIGN KEY (id_producto) REFERENCES producto(id)  
 );
 
 CREATE TABLE venda 
