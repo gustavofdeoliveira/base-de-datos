@@ -6,13 +6,13 @@
 
 ## Enunciado
 
-Una tienda de ventas de productos desea mejorar su sistema de gestión y control, actualmente realizado de forma manual, hacia un sistema electrónico que permita una mayor eficiencia en la administración de clientes, productos y ventas. La tienda trabaja con una amplia variedad de productos, organizados por categorías, cada una representando un grupo de artículos similares, como electrónicos, ropa o alimentos. Cada producto tiene un precio, una cantidad en inventario y está asociado a una categoría específica, lo que facilita una mejor organización del stock.
+Una tienda de ventas de productos desea mejorar su sistema de gestión y control, actualmente realizado de forma manual, hacia un sistema electrónico que permita una mayor eficiencia en la administración de clientes, productos y ventas. La tienda trabaja con una amplia variedad de productos, organizados por categorías, cada una representando un grupo de artículos similares, como electrónicos, ropa o alimentos. Cada producto tiene un nombre, un precio, una cantidad en inventario y está asociado a una categoría específica, lo que facilita una mejor organización del stock.
 
-Los productos de la tienda son suministrados por diferentes proveedores. Cada proveedor cuenta con un nombre, información de contacto y es responsable del abastecimiento de ciertos productos, lo que facilita la reposición del inventario y la negociación de nuevos contratos. Para atender mejor a sus clientes, la tienda también desea gestionar información detallada sobre ellos, incluyendo nombre, correo electrónico y teléfono, permitiendo una relación más cercana y la oferta de promociones personalizadas.
+Los productos de la tienda son suministrados por diferentes proveedores. Cada proveedor cuenta con su rut, un nombre, información de contacto y es responsable del abastecimiento de ciertos productos, lo que facilita la reposición del inventario y la negociación de nuevos contratos. Para atender mejor a sus clientes, la tienda también desea gestionar información detallada sobre ellos, incluyendo rut, nombre, correo electrónico y teléfono, permitiendo una relación más cercana y la oferta de promociones personalizadas.
 
-Las ventas realizadas por la tienda se registran en el sistema, asociando cada venta a un cliente y a un empleado que realizó la transacción. Cada venta incluye información como la fecha, el valor total y el método de pago, lo que posibilita análisis detallados sobre el rendimiento y las preferencias de los clientes. Además, como las ventas pueden involucrar varios productos, es necesario registrar la cantidad de cada artículo vendido, asegurando un control preciso del inventario.
+Las ventas realizadas por la tienda se registran en el sistema, asociando cada venta a un cliente y a un empleado que realizó la transacción. Cada empleado tiene, un rut, un nombre, un correo electrónico, un teléfono. Cada venta incluye información como la fecha, el valor total y el método de pago, lo que posibilita análisis detallados sobre el rendimiento y las preferencias de los clientes. Además, como las ventas pueden involucrar varios productos, es necesario registrar la cantidad de cada artículo vendido, asegurando un control preciso del inventario.
 
-La tienda también cuenta con gerentes responsables de supervisar las operaciones y el desempeño de los empleados. Cada gerente tiene un nombre, un correo electrónico, un teléfono y está asociado a un conjunto de empleados, permitiendo una gestión más efectiva del personal y una clara jerarquía administrativa. Además, los gerentes participan en la toma de decisiones estratégicas, como la implementación de promociones o ajustes en el inventario.
+La tienda también cuenta con gerentes responsables de supervisar las operaciones y el desempeño de los empleados. Cada gerente tiene, un rut, un nombre, un correo electrónico, un teléfono y está asociado a un conjunto de empleados, permitiendo una gestión más efectiva del personal y una clara jerarquía administrativa. Además, los gerentes participan en la toma de decisiones estratégicas, como la implementación de promociones o ajustes en el inventario.
 
 Para gestionar situaciones como devoluciones, el sistema permitirá registrar cuando un cliente devuelve un producto, incluyendo la fecha de la devolución y el motivo, ayudando a la tienda a monitorear la calidad de los productos y la satisfacción de los clientes. Además, la tienda frecuentemente realiza promociones y ofertas, aplicando descuentos en productos específicos durante períodos determinados. Estas promociones se registran con detalles como el porcentaje de descuento y las fechas de inicio y término, para garantizar que los precios se apliquen correctamente.
 
@@ -22,15 +22,15 @@ El control del inventario es una prioridad para la tienda, siendo necesario regi
 ### Requisitos  
 
 1. **Cliente**  
-   - Atributos: `ID`, `Nombre`, `Correo`, `Teléfono`.  
+   - Atributos: `RUT`, `Nombre`, `Correo`, `Teléfono`.  
    - Descripción: Representa los clientes que realizan compras en la tienda.  
 
 2. **Producto**  
-   - Atributos: `ID`, `Nombre`, `Precio`, `Cantidad en Inventario`, `CategoríaID`.  
+   - Atributos: `ID`, `Nombre`, `Precio`, `Cantidad en Inventario`, `Categoria`, `Fecha de Criacion` y `Fecha de Atualizacion`.  
    - Descripción: Almacena los productos disponibles para la venta.  
 
 3. **Categoría**  
-   - Atributos: `ID`, `Nombre`, `Descripción`.  
+   - Atributos: `Nombre`.  
    - Descripción: Agrupa productos similares para facilitar su gestión.  
 
 4. **Proveedor**  
@@ -38,11 +38,11 @@ El control del inventario es una prioridad para la tienda, siendo necesario regi
    - Descripción: Representa las empresas que suministran los productos.  
 
 5. **Empleado**  
-   - Atributos: `ID`, `Nombre`, `Correo`, `Teléfono`.  
+   - Atributos: `RUT`, `Nombre`, `Correo`, `Teléfono`.  
    - Descripción: Almacena información de los empleados responsables de las ventas.  
 
 6. **Gerente**  
-   - Atributos: `ID`, `Nombre`, `Correo`, `Teléfono`.  
+   - Atributos: `RUT`, `Nombre`, `Correo`, `Teléfono`.  
    - Descripción: Supervisores responsables de las operaciones y del desempeño de los empleados.  
 
 7. **Venta**  
