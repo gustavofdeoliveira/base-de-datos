@@ -1,16 +1,18 @@
 package model;
 
+import java.util.Date;
+
 public class OperacionFinanceiraModel {
     private Integer id;
     private float valor;
-    private String fechaCreacion;
     private int cuentaOperacion;
     private int idCliente;
     private String tipo;
     private String status;
     private int idCuenta;
+    private Date fechaCreacion;
 
-    public OperacionFinanceiraModel(Integer id, float valor, String fechaCreacion, int cuentaOperacion, int idCliente, String tipo, String status, int idCuenta) {
+    public OperacionFinanceiraModel(Integer id, float valor, Date fechaCreacion, int cuentaOperacion, int idCliente, String tipo, String status, int idCuenta) {
         this.id = id;
         this.valor = valor;
         this.fechaCreacion = fechaCreacion;
@@ -37,11 +39,11 @@ public class OperacionFinanceiraModel {
         this.valor = valor;
     }
 
-    public String getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

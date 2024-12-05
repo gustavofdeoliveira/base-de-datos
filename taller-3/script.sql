@@ -4,14 +4,14 @@ CREATE TABLE IF NOT EXISTS cliente (
     nombre VARCHAR(255) NOT NULL,  
     direccion VARCHAR(255) NOT NULL,  
     email VARCHAR(100) NOT NULL,  
-    telefone VARCHAR(50) NOT NULL,  
+    telefono VARCHAR(50) NOT NULL,
     contrasena VARCHAR(150) NOT NULL,
     tipo VARCHAR(50) NOT NULL DEFAULT 'cliente'
 );
 
 -- Tabla Cuenta
 CREATE TABLE IF NOT EXISTS cuenta (
-    numero INT PRIMARY KEY,  
+    numero SERIAL PRIMARY KEY,
     saldo FLOAT NOT NULL DEFAULT 1000,  
     fecha_creacion DATE NOT NULL DEFAULT CURRENT_DATE,  
     id_cliente INT NOT NULL,
@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS operacion_status (
 );
 
 -- Tabla Operacion Financeira
-CREATE TABLE IF NOT EXISTS operacion_financeira (
-    id INT PRIMARY KEY,  
+CREATE TABLE IF NOT EXISTS operacion_financiera (
+    id SERIAL PRIMARY KEY,
     valor FLOAT NOT NULL,  
     fecha_creacion DATE NOT NULL DEFAULT CURRENT_DATE,  
     cuenta_operacion INT,  
@@ -45,13 +45,13 @@ CREATE TABLE IF NOT EXISTS operacion_financeira (
 );
 
 -- Insertar tipos de operación
-INSERT INTO tipo_operacion (nombre) VALUES ('depósitos'), ('retiros'), ('transferencias') ON CONFLICT DO NOTHING;
+INSERT INTO tipo_operacion (nombre) VALUES ('depósito'), ('retiro'), ('transferencia') ON CONFLICT DO NOTHING;
 
 -- Insertar estados de operación
 INSERT INTO operacion_status (nombre) VALUES ('creado'), ('comenzo'), ('finalizado') ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente
-INSERT INTO cliente (rut, nombre, direccion, email, telefone, contrasena, tipo) VALUES
+INSERT INTO cliente (rut, nombre, direccion, email, telefono, contrasena, tipo) VALUES
 (101234567, 'Carlos Soto', 'Av. Las Flores 123', 'carlos.soto@gmail.com', '+56912345678', 'password123', 'cliente'),
 (102345678, 'Ana Pérez', 'Calle Los Robles 456', 'ana.perez@hotmail.com', '+56987654321', 'securepass456', 'cliente'),
 (103456789, 'Javier Morales', 'Pasaje Los Álamos 789', 'javier.morales@yahoo.com', '+56911223344', 'mypassword789', 'administrador'),
@@ -78,7 +78,7 @@ INSERT INTO operacion_financeira (id, valor, fecha_creacion, cuenta_operacion, i
 CREATE OR REPLACE FUNCTION verificar_saldo_negativo()
 RETURNS TRIGGER AS $$
 DECLARE
-    saldo_actual FLOAT; -- Declarar la variable antes de las instrucciones
+    saldo_actual FLOAT;
 BEGIN
     -- Verificar si el tipo de operación es 'retiros' o 'transferencias'
     IF NEW.tipo = 'retiros' OR NEW.tipo = 'transferencias' THEN

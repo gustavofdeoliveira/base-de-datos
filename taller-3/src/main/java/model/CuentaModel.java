@@ -1,24 +1,26 @@
 package model;
 
+import java.sql.Date;
+
 public class CuentaModel {
-    private Integer id;
+    private Integer numero;
     private float saldo;
-    private String fechaCreacion;
+    private Date fechaCreacion;
     private int idCliente;
 
-    public CuentaModel(Integer id, float saldo, String fechaCreacion, int idCliente) {
-        this.id = id;
+    public CuentaModel(Integer numero, float saldo, Date fechaCreacion, int idCliente) {
+        this.numero = numero;
         this.saldo = saldo;
         this.fechaCreacion = fechaCreacion;
         this.idCliente = idCliente;
     }
 
-    public int getId() {
-        return id;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public float getSaldo() {
@@ -29,11 +31,11 @@ public class CuentaModel {
         this.saldo = saldo;
     }
 
-    public String getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

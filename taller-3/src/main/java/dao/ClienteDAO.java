@@ -2,9 +2,9 @@ package dao;
 
 import model.ClienteModel;
 import config.DatabaseConnection;
-import model.CuentaModel;
 
 import java.sql.*;
+
 
 public class ClienteDAO {
     public ClienteModel iniciarSesion(String email, String contrasena) {
@@ -16,36 +16,16 @@ public class ClienteDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return new ClienteModel(
+                ClienteModel resultCliente = new ClienteModel(
                         rs.getInt("rut"),
                         rs.getString("nombre"),
                         rs.getString("direccion"),
                         rs.getString("email"),
-                        rs.getString("telefone"),
+                        rs.getString("telefono"),
                         rs.getString("contrasena"),
-                        rs.getString("tipo")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+                        rs.getString("tipo"));
 
-    public static CuentaModel consultaSaldo(int id_cliente) {
-        String consulta = "SELECT * FROM cuenta WHERE id_cliente = ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(consulta)) {
-            stmt.setInt(1, id_cliente);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return new CuentaModel(
-                        rs.getInt("int"),
-                        rs.getFloat("saldo"),
-                        rs.getString("fecha_creacion"),
-                        rs.getInt("id_cliente")
-                );
+                return resultCliente;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,9 +34,9 @@ public class ClienteDAO {
     }
 
     public boolean registrarCliente(ClienteModel cliente) {
-        String consulta = "INSERT INTO cliente (rut, nombre, direccion, email, telefone, contrasena, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cliente (rut, nombre, direccion, email, telefono, contrasena, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(consulta)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, cliente.getRut());
             stmt.setString(2, cliente.getNombre());
             stmt.setString(3, cliente.getDireccion());
@@ -67,9 +47,62 @@ public class ClienteDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al registrar cliente: " + e.getMessage());
+            return false;
         }
-        return false;
+    }
+
+    public ClienteModel consultarClientePorRut(int rut) {
+        String sql = "SELECT * FROM cliente WHERE rut = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, rut);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new ClienteModel(
+                        rs.getInt("rut"),
+                        rs.getString("nombre"),
+                        rs.getString("direccion"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                        rs.getString("contrasena"),
+                        rs.getString("tipo")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al consultar cliente: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean actualizarCliente(ClienteModel cliente) {
+        String sql = "UPDATE cliente SET nombre = ?, direccion = ?, email = ?, telefono = ?, contrasena = ? WHERE rut = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cliente.getNombre());
+            stmt.setString(2, cliente.getDireccion());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setString(4, cliente.getTelefono());
+            stmt.setString(5, cliente.getContrasena());
+            stmt.setInt(6, cliente.getRut());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminarCliente(int rut) {
+        String sql = "DELETE FROM cliente WHERE rut = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, rut);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar cliente: " + e.getMessage());
+            return false;
+        }
     }
 }
-
