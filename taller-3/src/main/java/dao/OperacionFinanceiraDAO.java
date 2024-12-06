@@ -116,7 +116,7 @@ public class OperacionFinanceiraDAO {
 
                 // Actualizar saldo de la cuenta de destino
                 try (PreparedStatement stmt = conn.prepareStatement(updateSaldoQuery)) {
-                    stmt.setFloat(1, operacion.getValor()); // Adición
+                    stmt.setFloat(1, operacion.getValor());
                     stmt.setInt(2, operacion.getIdCuenta());
                     stmt.executeUpdate();
                 }
@@ -124,12 +124,9 @@ public class OperacionFinanceiraDAO {
 
             conn.commit(); // Confirmar la transacción
             return true;
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-
-
 }

@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class AdministradorService {
     private static final ClienteDAO clienteDAO = new ClienteDAO();
     private static final CuentaDAO cuentaDAO = new CuentaDAO();
-    private  static  final OperacionFinanceiraDAO operacionFinanceiraDAO = new OperacionFinanceiraDAO();
+    private static final OperacionFinanceiraDAO operacionFinanceiraDAO = new OperacionFinanceiraDAO();
 
     public static void menuAdministrador(ClienteModel cliente, Scanner scanner) {
         boolean showMenu = true;
@@ -35,9 +35,12 @@ public class AdministradorService {
                     consultarHistorial(scanner);
                     break;
                 case 2:
-                    verCuentasInactivas(scanner);
+                    generarReporte(scanner);
                     break;
                 case 3:
+                    cuentasInactivas(scanner);
+                    break;
+                case 4:
                     configuracionUsuarios(scanner);
                     break;
                 case 5:
@@ -80,23 +83,49 @@ public class AdministradorService {
         }
     }
 
-    private static void verCuentasInactivas(Scanner scanner) {
-        List<CuentaModel> cuentasInactivas = cuentaDAO.obtenerCuentasInactivas();
+    private static void cuentasInactivas(Scanner scanner) {
+        System.out.println("=== Vista de Cuentas Inactivas ===");
+        System.out.print("Ingrese el periodo de inactividad (en días): ");
+        int periodo = scanner.nextInt();
+        scanner.nextLine();
+
+        List<CuentaModel> cuentasInactivas = cuentaDAO.obtenerCuentasInactivasPorPeriodo(periodo);
 
         if (cuentasInactivas.isEmpty()) {
-            System.out.println("No se encontraron cuentas inactivas.");
+            System.out.println("No se encontraron cuentas inactivas en el periodo especificado.");
         } else {
             System.out.println("Cuentas inactivas:");
             for (CuentaModel cuenta : cuentasInactivas) {
-                System.out.println(cuenta);
+                System.out.println("========================");
+                System.out.println("Numero: " + cuenta.getNumero());
+                System.out.println("Saldo: " + cuenta.getSaldo());
+                System.out.println("Fecha de Creación: " + cuenta.getFechaCreacion());
             }
         }
     }
 
+    private static void generarReporte(Scanner scanner) {
+        System.out.println("=== Reporte Financiero ===");
+
+        float saldoPromedio = cuentaDAO.obtenerSaldoPromedio();
+        System.out.println("Saldo promedio de las cuentas: " + saldoPromedio);
+
+        List<CuentaModel> cuentasMasActivas = cuentaDAO.obtenerCuentasMasActivas();
+        System.out.println("Cuentas con mayor número de transacciones:");
+        for (CuentaModel cuenta : cuentasMasActivas) {
+            System.out.println("========================");
+            System.out.println("Numero: " + cuenta.getNumero());
+            System.out.println("Saldo: " + cuenta.getSaldo());
+        }
+
+        float ingresosNetos = cuentaDAO.obtenerIngresosNetos();
+        System.out.println("Ingresos netos de la institución: " + ingresosNetos);
+    }
+
     private static void consultarHistorial(Scanner scanner) {
-        System.out.print("Ingrese el ID del cliente: ");
+        System.out.print("Ingrese el RUT del cliente: ");
         int idCliente = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha
+        scanner.nextLine();
 
         List<OperacionFinanceiraModel> historial = operacionFinanceiraDAO.consultarHistorialPorCliente(idCliente);
 
@@ -115,7 +144,6 @@ public class AdministradorService {
             }
         }
     }
-
 
 
     private static void agregarClienteYCuenta(Scanner scanner) {

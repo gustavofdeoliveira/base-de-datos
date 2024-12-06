@@ -103,7 +103,7 @@ public class ClienteService {
         scanner.nextLine();
 
         OperacionFinanceiraModel operacion = new OperacionFinanceiraModel(
-                null, valor, null, cliente.getRut(), cliente.getRut(), "depósito", "finalizado", cliente.getRut()
+                null, valor, null, cliente.getRut(), cliente.getRut(), "depósito", "creado", cliente.getRut()
         );
 
         if (operacionFinanceiraDAO.registrarOperacion(operacion)) {
@@ -136,7 +136,7 @@ public class ClienteService {
     }
 
     private static void realizarTransferencia(Scanner scanner, ClienteModel cliente) {
-        System.out.print("Ingrese el ID de la cuenta destino: ");
+        System.out.print("Ingrese el numero de la cuenta destino: ");
         int cuentaDestino = scanner.nextInt();
         System.out.print("Ingrese el valor de la transferencia: ");
         float valor = scanner.nextFloat();
@@ -151,7 +151,7 @@ public class ClienteService {
         }
 
         OperacionFinanceiraModel operacion = new OperacionFinanceiraModel(
-                null, valor, null, cliente.getRut(), cliente.getRut(), "transferencia", "finalizado", cuentaDestino
+                null, valor, null, cliente.getRut(), cliente.getRut(), "transferencia", "creado", cuentaDestino
         );
 
         if (operacionFinanceiraDAO.registrarOperacion(operacion)) {

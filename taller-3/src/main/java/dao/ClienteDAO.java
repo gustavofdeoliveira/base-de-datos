@@ -94,15 +94,32 @@ public class ClienteDAO {
     }
 
     public boolean eliminarCliente(int rut) {
-        String sql = "DELETE FROM cliente WHERE rut = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, rut);
-            stmt.executeUpdate();
+        String deleteCuentaQuery = "DELETE FROM cuenta WHERE id_cliente = ?";
+        String deleteClienteQuery = "DELETE FROM cliente WHERE rut = ?";
+
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            conn.setAutoCommit(false); // Inicia uma transação
+
+            // Deletar contas associadas ao cliente
+            try (PreparedStatement stmtCuenta = conn.prepareStatement(deleteCuentaQuery)) {
+                stmtCuenta.setInt(1, rut);
+                stmtCuenta.executeUpdate();
+            }
+
+            // Deletar o cliente
+            try (PreparedStatement stmtCliente = conn.prepareStatement(deleteClienteQuery)) {
+                stmtCliente.setInt(1, rut);
+                stmtCliente.executeUpdate();
+            }
+
+            conn.commit();
             return true;
+
         } catch (SQLException e) {
-            System.err.println("Error al eliminar cliente: " + e.getMessage());
+            System.err.println("Erro ao deletar cliente: " + e.getMessage());
             return false;
         }
     }
+
 }

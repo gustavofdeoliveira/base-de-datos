@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS operacion_financiera (
 INSERT INTO tipo_operacion (nombre) VALUES ('depósito'), ('retiro'), ('transferencia') ON CONFLICT DO NOTHING;
 
 -- Insertar estados de operación
-INSERT INTO operacion_status (nombre) VALUES ('creado'), ('comenzo'), ('finalizado') ON CONFLICT DO NOTHING;
+INSERT INTO operacion_status (nombre) VALUES ('creado'), ('finalizado') ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente
 INSERT INTO cliente (rut, nombre, direccion, email, telefono, contrasena, tipo) VALUES
@@ -67,12 +67,12 @@ INSERT INTO cuenta (numero, saldo, fecha_creacion, id_cliente) VALUES
 (2005, 500.25, '2024-05-18', 105678901);
 
 -- Insertando datos en la tabla Operacion Financeira
-INSERT INTO operacion_financeira (id, valor, fecha_creacion, cuenta_operacion, id_cliente, tipo, status, id_cuenta) VALUES
-(3001, 500.00, '2024-06-01', 2001, 101234567, 'depósitos', 'creado', 2001),
-(3002, 200.00, '2024-06-02', 2002, 102345678, 'retiros', 'finalizado', 2002),
-(3003, 300.00, '2024-06-03', 2003, 103456789, 'transferencias', 'comenzo', 2003),
-(3004, 100.00, '2024-06-04', 2004, 104567890, 'retiros', 'finalizado', 2004),
-(3005, 150.00, '2024-06-05', 2005, 105678901, 'depósitos', 'creado', 2005);
+INSERT INTO operacion_financiera (id, valor, fecha_creacion, cuenta_operacion, id_cliente, tipo, status, id_cuenta) VALUES
+(3001, 500.00, '2024-06-01', 2001, 101234567, 'depósito', 'finalizado', 2001),
+(3002, 200.00, '2024-06-02', 2002, 102345678, 'retiro', 'finalizado', 2002),
+(3003, 300.00, '2024-06-03', 2003, 103456789, 'transferencia', 'finalizado', 2003),
+(3004, 100.00, '2024-06-04', 2004, 104567890, 'retiro', 'finalizado', 2004),
+(3005, 150.00, '2024-06-05', 2005, 105678901, 'depósito', 'finalizado', 2005);
 
 -- Función para verificar saldo negativo
 CREATE OR REPLACE FUNCTION verificar_saldo_negativo()
@@ -98,14 +98,33 @@ $$ LANGUAGE plpgsql;
 
 -- Crear el trigger
 CREATE TRIGGER trigger_verificar_saldo_negativo
-BEFORE INSERT ON operacion_financeira
+BEFORE INSERT ON operacion_financiera
 FOR EACH ROW
 EXECUTE FUNCTION verificar_saldo_negativo();
 
+-- Função para atualizar o status para 'finalizado'
+CREATE OR REPLACE FUNCTION actualizar_status_a_finalizado()
+RETURNS TRIGGER AS $$
+BEGIN
+UPDATE operacion_financiera
+SET status = 'finalizado'
+WHERE id = NEW.id;
+
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger para chamar a função após inserção
+CREATE TRIGGER trigger_actualizar_status
+    AFTER INSERT ON operacion_financiera
+    FOR EACH ROW
+    EXECUTE FUNCTION actualizar_status_a_finalizado();
+
+
 -- Operación inválida: Retiro que deja saldo negativo
-INSERT INTO operacion_financeira (id, valor, cuenta_operacion, id_cliente, tipo, status, id_cuenta) 
+INSERT INTO operacion_financiera (id, valor, cuenta_operacion, id_cliente, tipo, status, id_cuenta)
 VALUES (4003, 5000.00, 2003, 103456789, 'retiros', 'comenzo', 2003);
 
 -- Operación inválida: Transferencia que deja saldo negativo
-INSERT INTO operacion_financeira (id, valor, cuenta_operacion, id_cliente, tipo, status, id_cuenta) 
+INSERT INTO operacion_financiera (id, valor, cuenta_operacion, id_cliente, tipo, status, id_cuenta)
 VALUES (4004, 7000.00, 2004, 104567890, 'transferencias', 'creado', 2004);
