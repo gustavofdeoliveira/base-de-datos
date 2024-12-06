@@ -14,7 +14,11 @@
 ```plaintext
 .
 ├── docker-compose.yml       
-├── src/                    
+├── src/      
+      ├── config
+      ├── dao
+      ├── model
+      ├── service                     
 ├── script.sql            
 ```
 
@@ -64,3 +68,21 @@
     - **Contraseña:** `postgres123`
     - **Base de datos:** `postgres`
 
+5. **Cómo ejecutar el programa**
+
+Accede a la carpeta `src/main/java` desde tu IDE preferida y ejecuta el archivo `Main.java`. Esto iniciará el programa.
+
+Si prefieres ejecutarlo desde la línea de comandos, usa el siguiente comando (asumiendo que tienes Maven o Gradle configurado para el proyecto):
+
+5.1 **Usando Maven:**
+
+```bash
+mvn clean install
+mvn exec:java -Dexec.mainClass="com.tuproyecto.Main"
+```
+
+5.2 **Usando Gradle:**
+
+```bash
+gradle run
+```
